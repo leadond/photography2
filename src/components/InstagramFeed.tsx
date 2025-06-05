@@ -47,7 +47,7 @@ const InstagramFeed = () => {
     {
       id: '7',
       imageUrl: 'https://images.pexels.com/photos/3760514/pexels-photo-3760514.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      caption: 'Capturing beautiful moments at today's family session #dxmproductions #familyphotography',
+      caption: "Capturing beautiful moments at today's family session #dxmproductions #familyphotography",
       likes: 143,
       link: 'https://www.instagram.com/dxmproductions/tagged/'
     },

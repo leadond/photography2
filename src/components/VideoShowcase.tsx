@@ -3,11 +3,16 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 interface VideoShowcaseProps {
-  title: string
-  description: string
+  videoUrl: string
+  title?: string
+  description?: string
 }
 
-const VideoShowcase: React.FC<VideoShowcaseProps> = ({ title, description }) => {
+const VideoShowcase: React.FC<VideoShowcaseProps> = ({ 
+  videoUrl, 
+  title = "Our Photography Process",
+  description = "Experience our professional photography process from start to finish. We focus on capturing authentic moments with artistic vision and technical excellence."
+}) => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -51,17 +56,13 @@ const VideoShowcase: React.FC<VideoShowcaseProps> = ({ title, description }) => 
             transition={{ duration: 0.8, delay: 0.2 }}
             className="rounded-xl overflow-hidden shadow-2xl"
           >
-            <div className="aspect-w-16 aspect-h-9 relative">
+            <div className="aspect-w-16 aspect-h-9">
               <iframe 
-                src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fdleadon%2Fvideos%2F10216689953548202%2F&show_text=0&width=560" 
-                width="560"
-                height="315"
-                style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }}
-                scrolling="no"
-                frameBorder="0"
-                allowFullScreen={true}
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                className="absolute inset-0 w-full h-full"
+                src={videoUrl}
+                title="Photography Showcase"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
               ></iframe>
             </div>
           </motion.div>

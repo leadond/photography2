@@ -89,8 +89,8 @@ const AboutPage = () => {
             </div>
             <div className="relative">
               <img 
-                src="https://images.pexels.com/photos/3760529/pexels-photo-3760529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                alt="Photography studio" 
+                src="/derrick-leadon.jpg" 
+                alt="Derrick Leadon - Founder of DXM Productions" 
                 className="rounded-lg shadow-xl w-full h-auto"
               />
               <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-lg shadow-lg hidden md:block">

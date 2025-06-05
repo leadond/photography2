@@ -3,49 +3,34 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary-color: #D4AF37;
+  --secondary-color: #333333;
+  --accent-color: #F5F5F5;
+  --color-primary-50: 250 240 190;
+  --color-primary-100: 245 235 175;
+  --color-primary-200: 240 225 150;
+  --color-primary-300: 230 210 120;
+  --color-primary-400: 220 195 90;
+  --color-primary-500: 212 175 55; /* D4AF37 */
+  --color-primary-600: 190 155 45;
+  --color-primary-700: 170 140 40;
+  --color-primary-800: 150 120 35;
+  --color-primary-900: 130 100 30;
 }
 
-/* Light mode styles */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-}
-
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Base styles */
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-/* Focus styles for accessibility */
-:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--secondary-color);
+  background-color: #FFFFFF;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -53,40 +38,138 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: #D4AF37;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #c49f32;
 }
 
-/* Utility classes */
-.container {
-  width: 100%;
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* Animation classes */
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Responsive image handling */
-img {
-  max-width: 100%;
-  height: auto;
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Custom utilities */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Image hover effects */
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-6 py-3 bg-amber-500 text-white font-semibold rounded-full shadow-lg hover:bg-amber-600 transition-all transform hover:scale-105;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-transparent border-2 border-amber-500 text-amber-500 font-semibold rounded-full hover:bg-amber-500 hover:text-white transition-all transform hover:scale-105;
+}
+
+/* Section styles */
+.section-padding {
+  @apply py-20;
+}
+
+.container-padding {
+  @apply px-4;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-xl shadow-lg overflow-hidden;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+.heading-xl {
+  @apply text-5xl md:text-6xl;
+}
+
+.heading-lg {
+  @apply text-4xl md:text-5xl;
+}
+
+.heading-md {
+  @apply text-3xl md:text-4xl;
+}
+
+.heading-sm {
+  @apply text-2xl md:text-3xl;
+}
+
+.text-lg {
+  @apply text-xl;
+}
+
+/* Form elements */
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors;
+}
+
+.form-label {
+  @apply block text-gray-700 font-medium mb-2;
+}
+
+/* Responsive utilities */
+.responsive-container {
+  @apply container mx-auto px-4;
+}
+
+/* Grid layouts */
+.grid-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+}
+
+.grid-3 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+.grid-4 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8;
 }

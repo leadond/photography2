@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 interface HeroProps {
   title: string
@@ -7,9 +8,10 @@ interface HeroProps {
   backgroundImage: string
   buttonText?: string
   buttonLink?: string
-  overlay?: boolean
-  height?: 'full' | 'large' | 'medium' | 'small'
-  alignment?: 'center' | 'left'
+  overlayOpacity?: number
+  height?: string
+  textPosition?: 'left' | 'center' | 'right'
+  parallax?: boolean
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -18,34 +20,49 @@ const Hero: React.FC<HeroProps> = ({
   backgroundImage,
   buttonText,
   buttonLink = '/contact',
-  overlay = true,
-  height = 'large',
-  alignment = 'center'
+  overlayOpacity = 0.4,
+  height = 'h-screen',
+  textPosition = 'center',
+  parallax = false
 }) => {
-  const heightClasses = {
-    full: 'min-h-screen',
-    large: 'min-h-[80vh]',
-    medium: 'min-h-[60vh]',
-    small: 'min-h-[40vh]'
-  }
+  const parallaxRef = useRef<HTMLDivElement>(null)
 
-  const alignmentClasses = {
-    center: 'text-center items-center justify-center',
-    left: 'text-left items-start justify-center'
+  useEffect(() => {
+    if (!parallax || !parallaxRef.current) return
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      if (parallaxRef.current) {
+        parallaxRef.current.style.transform = `translateY(${scrollY * 0.5}px)`
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [parallax])
+
+  const getTextPositionClass = () => {
+    switch (textPosition) {
+      case 'left': return 'items-center justify-start text-left pl-8 md:pl-16 lg:pl-24'
+      case 'right': return 'items-center justify-end text-right pr-8 md:pr-16 lg:pr-24'
+      default: return 'items-center justify-center text-center'
+    }
   }
 
   return (
-    <div 
-      className={`relative flex ${heightClasses[height]} bg-cover bg-center bg-no-repeat`}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      {overlay && (
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-      )}
-      
-      <div className={`container relative z-10 px-4 flex flex-col ${alignmentClasses[alignment]}`}>
+    <div className={`relative w-full ${height} overflow-hidden`}>
+      <div 
+        ref={parallaxRef}
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      ></div>
+      <div 
+        className="absolute inset-0 bg-black"
+        style={{ opacity: overlayOpacity }}
+      ></div>
+      <div className={`relative z-10 flex flex-col h-full w-full px-4 ${getTextPositionClass()}`}>
         <motion.h1 
-          className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 max-w-4xl"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -55,7 +72,7 @@ const Hero: React.FC<HeroProps> = ({
         
         {subtitle && (
           <motion.p 
-            className="text-xl md:text-2xl text-white mb-8 max-w-2xl"
+            className="text-xl md:text-2xl text-white mb-8 max-w-2xl drop-shadow-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -71,8 +88,8 @@ const Hero: React.FC<HeroProps> = ({
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Link 
-              to={buttonLink} 
-              className="btn btn-primary"
+              to={buttonLink}
+              className="px-8 py-3 bg-amber-500 text-white font-semibold rounded-full shadow-lg hover:bg-amber-600 transition-all transform hover:scale-105"
             >
               {buttonText}
             </Link>

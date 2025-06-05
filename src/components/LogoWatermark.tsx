@@ -1,43 +1,51 @@
 import React from 'react'
 
 interface LogoWatermarkProps {
-  variant?: 'd-gold' | 'd-white' | 'full-gold' | 'full-white'
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-  className?: string
+  variant?: 'light' | 'dark'
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center'
+  opacity?: number
+  size?: 'sm' | 'md' | 'lg'
 }
 
 const LogoWatermark: React.FC<LogoWatermarkProps> = ({
-  variant = 'd-gold',
-  size = 'lg',
-  className = ''
+  variant = 'light',
+  position = 'bottom-right',
+  opacity = 0.2,
+  size = 'md'
 }) => {
-  const getLogoPath = () => {
-    switch (variant) {
-      case 'd-gold': return '/logos/logo-d-gold.svg'
-      case 'd-white': return '/logos/logo-d-white.svg'
-      case 'full-gold': return '/logos/logo-full-gold.svg'
-      case 'full-white': return '/logos/logo-full-white.svg'
-      default: return '/logos/logo-d-gold.svg'
+  const getPositionClass = () => {
+    switch (position) {
+      case 'top-left': return 'top-4 left-4'
+      case 'top-right': return 'top-4 right-4'
+      case 'bottom-left': return 'bottom-4 left-4'
+      case 'bottom-right': return 'bottom-4 right-4'
+      case 'center': return 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+      default: return 'bottom-4 right-4'
     }
   }
-  
+
   const getSizeClass = () => {
     switch (size) {
-      case 'sm': return 'h-16 w-16'
-      case 'md': return 'h-24 w-24'
-      case 'lg': return 'h-32 w-32'
-      case 'xl': return 'h-48 w-48'
-      case '2xl': return 'h-64 w-64'
-      default: return 'h-32 w-32'
+      case 'sm': return 'w-16 h-16'
+      case 'md': return 'w-24 h-24'
+      case 'lg': return 'w-32 h-32'
+      default: return 'w-24 h-24'
     }
   }
-  
+
+  const logoSrc = variant === 'light' 
+    ? '/assets/logo/d-white.png' 
+    : '/assets/logo/d-gold.png'
+
   return (
-    <div className={`pointer-events-none ${className}`}>
+    <div 
+      className={`absolute ${getPositionClass()} ${getSizeClass()} pointer-events-none z-10`}
+      style={{ opacity }}
+    >
       <img 
-        src={getLogoPath()} 
-        alt="DXM Productions Logo" 
-        className={`${getSizeClass()} object-contain`}
+        src={logoSrc} 
+        alt="DXM Productions" 
+        className="w-full h-full object-contain"
       />
     </div>
   )
